@@ -1,28 +1,38 @@
-import pygame
-from pygame.pygame.locals import *
+import arcade
+#from pygame.pygame.locals import *
 from constants import *
 
 class GameController(object):
     def __init__(self):
-        pygame.init()
-        self.screen = pygame.display.set_mode(SCREENSIZE, 0, 32)
-        self.background = None
+        arcade.open_window(SCREENWIDTH, SCREENHEIGHT, "Working Title")
 
     def setBackground(self):
-        self.background = pygame.surface.Surface(SCREENSIZE).convert()
-        self.background.fill(BLACK)
+        arcade.set_background_color(BLACK)
 
     def startGame(self):
         self.setBackground()
+        self.render()
+        arcade.run()
 
     def update(self):
         self.checkEvents()
         self.render()
 
+    """
     def checkEvents(self):
         for event in pygame.event.get():
             if event.type == QUIT:
                 exit()
+    """
 
     def render(self):
-        pygame.display.update()
+        arcade.start_render()
+        arcade.draw_circle_filled(SCREENWIDTH/2, SCREENHEIGHT/2, 150, arcade.color.BLUE)
+        arcade.finish_render()
+
+
+if __name__ == "__main__":
+    game = GameController()
+    game.startGame()
+    #while True:
+    #    game.update()
