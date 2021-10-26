@@ -1,24 +1,29 @@
-import pygame
+import arcade
 from vector import Vector2
 from constants import *
 
 class Node(object):
     def __init__(self, x, y):
         self.position = Vector2(x, y)
-        self.neighbors = {UP:None, DOWN:None, LEFT:None, RIGHT:None}
+        self.neighbors = {UP:None, RIGHT:None, DOWN:None, LEFT:None}
 
-    def render(self, screen):
+    def render(self):
+        start = self.position
+        arcade.draw_circle_filled(start.x, start.y, 12, RED)
         for d in self.neighbors.keys():
             if self.neighbors[d] is not None:
-                line_start = self.position.asTuple()
-                line_end = self.neighbors[d].position.asTuple()
-                pygame.draw.line(screen, WHITE, line_start, line_end, 4)
-                pygame.draw.circle(screen, RED, self.position.asInt(), 12)
+                end = self.neighbors[d].position
+                arcade.draw_line(start.x, start.y, end.x, end.y, WHITE, 4)
+
+    def neighbor(self, direction, other):
+        self.neighbors[direction] = other
+        other.neighbors[(direction+2)%4] = self
 
 
 class NodeGroup(object):
     def __init__(self):
         self.nodeList = []
+        self.InitTestNodes()
 
     def InitTestNodes(self):
         nodeA = Node(80, 80)
@@ -28,25 +33,16 @@ class NodeGroup(object):
         nodeE = Node(208, 160)
         nodeF = Node(80, 320)
         nodeG = Node(208, 320)
-        nodeA.neighbors[RIGHT] = nodeB
-        nodeB.neighbors[LEFT] = nodeA
-        nodeA.neighbors[DOWN] = nodeC
-        nodeC.neighbors[UP] = nodeA
-        nodeB.neighbors[DOWN] = nodeD
-        nodeD.neighbors[UP] = nodeB
-        nodeC.neighbors[RIGHT] = nodeD
-        nodeD.neighbors[LEFT] = nodeC
-        nodeC.neighbors[DOWN] = nodeF
-        nodeF.neighbors[UP] = nodeC
-        nodeD.neighbors[RIGHT] = nodeE
-        nodeE.neighbors[LEFT] = nodeD
-        nodeE.neighbors[DOWN] = nodeG
-        nodeG.neighbors[UP] = nodeE
-        nodeF.neighbors[RIGHT] = nodeG
-        nodeG.neighbors[LEFT] = nodeF
+        nodeA.neighbor(RIGHT, nodeB)
+        nodeA.neighbor(DOWN, nodeC)
+        nodeB.neighbor(DOWN, nodeD)
+        nodeC.neighbor(RIGHT, nodeD)
+        nodeC.neighbor(DOWN, nodeF)
+        nodeD.neighbor(RIGHT, nodeE)
+        nodeE.neighbor(DOWN, nodeG)
+        nodeF.neighbor(RIGHT, nodeG)
         self.nodeList = [nodeA, nodeB, nodeC, nodeD, nodeE, nodeF, nodeG]
 
-    def render(self, screen):
+    def render(self):
         for node in self.nodeList:
-            node.render(screen)
-
+            node.render()

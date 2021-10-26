@@ -1,22 +1,25 @@
 import arcade
-#from pygame.pygame.locals import *
+from nodes import NodeGroup
 from constants import *
 
-class GameController(object):
+class GameController(arcade.Window):
     def __init__(self):
-        arcade.open_window(SCREENWIDTH, SCREENHEIGHT, "Working Title")
+        super().__init__(SCREENWIDTH, SCREENHEIGHT, "Working Title")
+        self.startGame()
+        # self.clock = arcade.time.Clock()
 
     def setBackground(self):
         arcade.set_background_color(BLACK)
 
     def startGame(self):
         self.setBackground()
-        self.render()
-        arcade.run()
+        self.nodes = NodeGroup()
 
+    """
     def update(self):
         self.checkEvents()
         self.render()
+    """
 
     """
     def checkEvents(self):
@@ -25,14 +28,12 @@ class GameController(object):
                 exit()
     """
 
-    def render(self):
+    def on_draw(self):
         arcade.start_render()
-        arcade.draw_circle_filled(SCREENWIDTH/2, SCREENHEIGHT/2, 150, arcade.color.BLUE)
-        arcade.finish_render()
+        self.nodes.render()
+        # arcade.finish_render()
 
 
 if __name__ == "__main__":
     game = GameController()
-    game.startGame()
-    #while True:
-    #    game.update()
+    arcade.run()
