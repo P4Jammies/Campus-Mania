@@ -17,7 +17,7 @@ class Node(object):
 
     def neighbor(self, direction, other):
         self.neighbors[direction] = other
-        other.neighbors[(direction+2)%4] = self
+        other.neighbors[direction*-1] = self
 
 
 class NodeGroup(object):
