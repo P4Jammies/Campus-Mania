@@ -4,7 +4,7 @@ from constants import *
 
 class Node(object):
     def __init__(self, x, y):
-        self.position = Vector2(x, y)
+        self.position = Vector2(x*TILEWIDTH, y*TILEHEIGHT)
         self.neighbors = {UP:None, RIGHT:None, DOWN:None, LEFT:None}
 
     def render(self):
@@ -25,14 +25,18 @@ class NodeGroup(object):
         self.nodeList = []
         self.InitTestNodes()
 
+    def render(self):
+        for node in self.nodeList:
+            node.render()
+
     def InitTestNodes(self):
-        nodeA = Node(80, 80)
-        nodeB = Node(160, 80)
-        nodeC = Node(80, 160)
-        nodeD = Node(160, 160)
-        nodeE = Node(208, 160)
-        nodeF = Node(80, 320)
-        nodeG = Node(208, 320)
+        nodeA = Node(5, 5)
+        nodeB = Node(10, 5)
+        nodeC = Node(5, 10)
+        nodeD = Node(10, 10)
+        nodeE = Node(13, 10)
+        nodeF = Node(5, 20)
+        nodeG = Node(13, 20)
         nodeA.neighbor(RIGHT, nodeB)
         nodeA.neighbor(DOWN, nodeC)
         nodeB.neighbor(DOWN, nodeD)
@@ -42,7 +46,3 @@ class NodeGroup(object):
         nodeE.neighbor(DOWN, nodeG)
         nodeF.neighbor(RIGHT, nodeG)
         self.nodeList = [nodeA, nodeB, nodeC, nodeD, nodeE, nodeF, nodeG]
-
-    def render(self):
-        for node in self.nodeList:
-            node.render()
