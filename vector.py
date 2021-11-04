@@ -53,4 +53,7 @@ class Vector2(object):
 
     def __str__(self):
         return f"<{self.x}, {self.y}>"
+
+    def __getitem__(self, i):
+        return self.x if not bool(i) else self.y
     
