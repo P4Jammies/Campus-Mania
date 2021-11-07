@@ -11,6 +11,7 @@ class Entity(arcade.Sprite):
                           DOWN:Vector2(0, -1), LEFT:Vector2(-1, 0),
                           STOP:Vector2()}
         self.direction = STOP
+        self.dt = 1/30
         self.set_speed(100)
         self.radius = 10
         self.hitbox = 5
@@ -28,6 +29,7 @@ class Entity(arcade.Sprite):
         self.speed = speed * TILEWIDTH / 16
     
     def set_velocity(self, dt):
+        dt = self.dt
         self.velocity = self.directions[self.direction]*self.speed*dt
 
     def draw(self):
