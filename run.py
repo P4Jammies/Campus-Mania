@@ -17,9 +17,9 @@ class GameController(arcade.Window):
         self.setBackground()
         self.nodes = NodeGroup()
         self.sprites = arcade.SpriteList()
-        self.entity = Entity(self.nodes.getStartNode())
+        self.entity = Entity(self.nodes.get_start_node())
         self.sprites.append(self.entity)
-        self.player = Player(self.nodes.getStartNode())
+        self.player = Player(self.nodes.get_start_node())
         self.sprites.append(self.player)
 
     def on_update(self, dt):
