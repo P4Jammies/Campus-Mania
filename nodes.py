@@ -40,7 +40,7 @@ class NodeGroup(object):
         return self.nodeList[0]
 
     def init_nodes(self):
-        self.init_test_nodes()
+        self.level1()
 
     def init_test_nodes(self):
         nodeA = Node(0, 0)
