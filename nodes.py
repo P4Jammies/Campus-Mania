@@ -1,11 +1,13 @@
 import arcade
+from numpy.lib.index_tricks import IndexExpression
 from vector import Vector2
 from constants import *
+import numpy as np
 
 class Node(object):
     def __init__(self, x, y):
-        self.position = Vector2((x+LBORDER)*SCALEWIDTH, (y+BBORDER)*SCALEHEIGHT)
-        self.neighbors = {UP:None, RIGHT:None, DOWN:None, LEFT:None}
+        self.position = Vector2(x, y)
+        self.neighbors = {UP:None, RIGHT:None, DOWN:None, LEFT:None, PORTAL:None}
 
     def render(self):
         start = self.position
@@ -23,11 +25,14 @@ class Node(object):
 class NodeGroup(object):
     def __init__(self):
         self.nodeList = []
-        self.InitNodes()
+        self.level1()
 
     def render(self):
         for node in self.nodeList:
             node.render()
+
+    def getStartNode(self):
+        return self.nodeList[0]
 
     def InitNodes(self):
         self.level1()
