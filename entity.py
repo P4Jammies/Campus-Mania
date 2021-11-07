@@ -35,7 +35,7 @@ class Entity(arcade.Sprite):
 
     # Carry On
     def set_position(self):
-        self._set_position(self.node.position)
+        self.position = self.node.position
 
     def set_speed(self, speed):
         self.speed = speed * TILEWIDTH / 16
