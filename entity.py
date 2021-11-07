@@ -23,9 +23,19 @@ class Entity(arcade.Sprite):
         self.choose_direction = self.random_direction
         self.invisible = False
         self.disablePortal = False
-        
+
+    # Redeclare Position helpers to make Sprite position compatible with Vector2    
+    def _get_position(self):
+        return Vector2(self.center_x, self.center_y)
+
+    def _set_position(self, pos: Vector2):
+        super()._set_position(pos)
+
+    position = property(_get_position, _set_position)
+
+    # Carry On
     def set_position(self):
-        self.position = self.node.position.asTuple()
+        self._set_position(self.node.position)
 
     def set_speed(self, speed):
         self.speed = speed * TILEWIDTH / 16
