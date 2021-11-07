@@ -1,7 +1,7 @@
 import arcade
 from nodes import NodeGroup
 from player import Player
-from enemy import Enemy
+from enemy import EnemyGroup
 from constants import *
 
 class GameController(arcade.Window):
@@ -19,8 +19,8 @@ class GameController(arcade.Window):
         self.sprites = arcade.SpriteList()
         self.player = Player(self.nodes.get_start_node())
         self.sprites.append(self.player)
-        self.entity = Enemy(self.nodes.get_start_node(), "sprites\\food.png", self.player)
-        self.sprites.append(self.entity)
+        self.enemies = EnemyGroup(self.nodes.get_start_node(), self.player)
+        self.sprites.extend(self.enemies)
 
     def on_update(self, dt):
         self.sprites.on_update(dt)
