@@ -45,9 +45,9 @@ class Entity(arcade.Sprite):
             self.node = self.target
             directions = self.validDirections()
             direction = self.chooseDirection(directions)
-            #if not self.disablePortal:
-            #    if self.node.neighbors[PORTAL] is not NONE:
-            #        self.node = self.node.neighbors[PORTAL]
+            if not self.disablePortal:
+                if self.node.neighbors[PORTAL] is not None:
+                    self.node = self.node.neighbors[PORTAL]
             self.target = self.getNewTarget(direction)
             if self.target is not self.node:
                 self.direction = direction

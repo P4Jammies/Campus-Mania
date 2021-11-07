@@ -17,13 +17,14 @@ class Node(object):
         start = self.position
         arcade.draw_circle_filled(start.x, start.y, 12, RED)
         for d in self.neighbors.keys():
-            if self.neighbors[d] is not None:
+            if d is not PORTAL and self.neighbors[d] is not None:
                 end = self.neighbors[d].position
                 arcade.draw_line(start.x, start.y, end.x, end.y, WHITE, 4)
 
     def neighbor(self, direction, other):
+        mod = -1 if direction != 3 else 1
         self.neighbors[direction] = other
-        other.neighbors[direction*-1] = self
+        other.neighbors[direction*mod] = self
 
 
 class NodeGroup(object):
@@ -156,11 +157,16 @@ class NodeGroup(object):
         MRD.neighbor(UP, MRU)
         MRU.neighbor(RIGHT, RMLU)
         MRU.neighbor(UP, MURD)
+        LP = Node(0, 4)
+        RP = Node(16, 4)
+        LP.neighbor(RIGHT, LML)
+        LP.neighbor(PORTAL, RP)
+        RP.neighbor(LEFT, RMR)
         self.nodeList = [
             LULU,             LURU, MULU, MURU, RULU,             RURU,
             LULD, LUML, LUMR, LURD, MULD, MURD, RULD, RUML, RUMR, RURD,
                               LMRU,  MLU,  MRU, RMLU,
-                   LML,                                      RMR,
+              LP,   LML,                                      RMR,  RP,
                               LMRD,  MLD,  MRD, RMLD,
             LDLU, LDML, LDMR, LDRU, MDLU, MDRU, RDLU, RDML, RDMR, RDRU,
             LDLD,             LDRD, MDLD, MDRD, RDLD,             RDRD
