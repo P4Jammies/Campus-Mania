@@ -1,12 +1,11 @@
 import arcade
-from nodes import Node
 from vector import Vector2
 from constants import *
 from entity import Entity
 from modes import ModeController as Mode
 
 class Enemy(Entity):
-    def __init__(self, node: Node, fname: str="sprites\\null.png", player=None, leader=None, scale: float=1):
+    def __init__(self, node, fname: str="sprites\\null.png", player=None, leader=None, scale: float=1):
         super().__init__(node, fname, scale)
         self.name = ENEMY
         self.points = POINTS
@@ -78,7 +77,7 @@ class Clyde(Enemy):
             super().scatter()
 
 class EnemyGroup(arcade.Window):
-    def __init__(self, node: Node, player):
+    def __init__(self, node, player):
         self.blinky = Blinky(node, player)
         self.pinky = Pinky(node, player)
         self.inky = Inky(node, player, self.blinky)
