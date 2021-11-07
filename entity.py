@@ -11,23 +11,23 @@ class Entity(arcade.Sprite):
                           DOWN:Vector2(0, -1), LEFT:Vector2(-1, 0),
                           STOP:Vector2()}
         self.direction = STOP
-        self.setSpeed(100)
+        self.set_speed(100)
         self.radius = 10
         self.hitbox = 5
         self.color = RED
         self.node = node
-        self.setPosition()
+        self.set_position()
         self.target = node
         self.invisible = False
         self.disablePortal = False
         
-    def setPosition(self):
+    def set_position(self):
         self.position = self.node.position.asTuple()
 
-    def setSpeed(self, speed):
+    def set_speed(self, speed):
         self.speed = speed * TILEWIDTH / 16
     
-    def setVelocity(self, dt):
+    def set_velocity(self, dt):
         self.velocity = self.directions[self.direction]*self.speed*dt
 
     def draw(self):
@@ -41,28 +41,28 @@ class Entity(arcade.Sprite):
     def on_update(self, dt):
         super().update()
 
-        if self.overshotTarget():
+        if self.overshot_target():
             self.node = self.target
-            directions = self.validDirections()
-            direction = self.chooseDirection(directions)
+            directions = self.valid_directions()
+            direction = self.choose_direction(directions)
             if not self.disablePortal:
                 if self.node.neighbors[PORTAL] is not None:
                     self.node = self.node.neighbors[PORTAL]
-            self.target = self.getNewTarget(direction)
+            self.target = self.get_new_target(direction)
             if self.target is not self.node:
                 self.direction = direction
             else:
-                self.target = self.getNewTarget(self.direction)
+                self.target = self.get_new_target(self.direction)
 
-            self.setPosition()
-            self.setVelocity(dt)
+            self.set_position()
+            self.set_velocity(dt)
 
-    def getNewTarget(self, direction):
-        if self.validDirection(direction):
+    def get_new_target(self, direction):
+        if self.valid_direction(direction):
             return self.node.neighbors[direction]
         return self.node
 
-    def overshotTarget(self):
+    def overshot_target(self):
         if self.target is not None:
             position = Vector2(self.center_x, self.center_y)
             target = self.target.position - self.node.position
@@ -70,34 +70,34 @@ class Entity(arcade.Sprite):
             return progress.magnitude2() >= target.magnitude2()
         return False
 
-    def reverseDirection(self):
+    def reverse_direction(self):
         self.direction *= -1
         temp = self.node
         self.node = self.target
         self.target = temp
 
-    def oppositeDirection(self, direction):
+    def opposite_direction(self, direction):
         if direction is not STOP:
             if direction == self.direction * -1:
                 return True
         return False
 
-    def validDirection(self, direction):
+    def valid_direction(self, direction):
         if direction is not STOP:
             if self.node.neighbors[direction] is not None:
                 return True
         return False
 
-    def validDirections(self):
+    def valid_directions(self):
         directions = []
         for key in [UP, DOWN, LEFT, RIGHT]:
-            if self.validDirection(key):
+            if self.valid_direction(key):
                 if key != self.direction * -1:
                     directions.append(key)
         if len(directions) == 0:
             directions.append(self.direction * -1)
         return directions
 
-    def chooseDirection(self, directions):
+    def choose_direction(self, directions):
         # random by default
         return directions[randint(0, len(directions)-1)]

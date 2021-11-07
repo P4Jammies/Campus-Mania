@@ -11,8 +11,8 @@ class Player(Entity):
         self.velocity = (0, 0)
         self.key = STOP
 
-    def setVelocity(self, dt):
-        super().setVelocity(dt)
+    def set_velocity(self, dt):
+        super().set_velocity(dt)
 
     def draw(self):
         print("Player is drawn")
@@ -21,24 +21,24 @@ class Player(Entity):
     def on_update(self, dt):
         super().update()
 
-        if self.overshotTarget():
+        if self.overshot_target():
             self.node = self.target
             if self.node.neighbors[PORTAL] is not None:
                 self.node = self.node.neighbors[PORTAL]
-            self.target = self.getNewTarget(self.key)
+            self.target = self.get_new_target(self.key)
             if self.target is not self.node:
                 self.direction = self.key
             else:
-                self.target = self.getNewTarget(self.direction)
+                self.target = self.get_new_target(self.direction)
 
             if self.target is self.node:
                 self.direction = STOP
-            self.setPosition()
-            self.setVelocity(dt)
+            self.set_position()
+            self.set_velocity(dt)
         else:
-            if self.oppositeDirection(self.key):
-                self.reverseDirection()
-                self.setVelocity(dt)
+            if self.opposite_direction(self.key):
+                self.reverse_direction()
+                self.set_velocity(dt)
 
     def on_key_press(self, symbol, modifiers):
         if symbol == arcade.key.UP or symbol == arcade.key.W:
