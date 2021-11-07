@@ -19,7 +19,7 @@ class GameController(arcade.Window):
         self.sprites = arcade.SpriteList()
         self.player = Player(self.nodes.get_start_node())
         self.sprites.append(self.player)
-        self.entity = Enemy(self.nodes.get_start_node())
+        self.entity = Enemy(self.nodes.get_start_node(), "sprites\\food.png", self.player)
         self.sprites.append(self.entity)
 
     def on_update(self, dt):
