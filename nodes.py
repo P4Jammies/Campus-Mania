@@ -4,8 +4,12 @@ from vector import Vector2
 from constants import *
 import numpy as np
 
+def genKey(x, y):
+    return (x+XBUFFER)*SCALEWIDTH, (y+YBUFFER)*SCALEHEIGHT
+
 class Node(object):
     def __init__(self, x, y):
+        x, y = genKey(x, y)
         self.position = Vector2(x, y)
         self.neighbors = {UP:None, RIGHT:None, DOWN:None, LEFT:None, PORTAL:None}
 
@@ -25,12 +29,12 @@ class Node(object):
 class NodeGroup(object):
     def __init__(self):
         self.nodeList = []
-        self.level1()
+        self.InitNodes()
 
     def render(self):
         for node in self.nodeList:
             node.render()
-
+        
     def getStartNode(self):
         return self.nodeList[0]
 
