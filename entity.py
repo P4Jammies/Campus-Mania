@@ -4,7 +4,7 @@ from constants import *
 from random import randint
 
 class Entity(arcade.Sprite):
-    def __init__(self, node, fname: str="sprites\\food.png", scale: float=1):
+    def __init__(self, node, fname: str, scale: float=1):
         super().__init__(fname, scale)
         self.name = None
         self.directions = {UP:Vector2(0, 1), RIGHT:Vector2(1, 0),
@@ -19,6 +19,8 @@ class Entity(arcade.Sprite):
         self.node = node
         self.set_position()
         self.target = node
+        self.goal = None
+        self.choose_direction = self.random_direction
         self.invisible = False
         self.disablePortal = False
         
@@ -100,6 +102,14 @@ class Entity(arcade.Sprite):
             directions.append(self.direction * -1)
         return directions
 
-    def choose_direction(self, directions):
+    def goal_direction(self, directions):
+        distances = []
+        for direction in directions:
+            vec = self.node.position + self.directions[direction]*TILEWIDTH - self.goal
+            distances.append(vec.magnitude2())
+        index = distances.index(min(distances))
+        return directions[index]
+
+    def random_direction(self, directions):
         # random by default
         return directions[randint(0, len(directions)-1)]
