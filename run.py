@@ -8,7 +8,7 @@ class GameController(arcade.Window):
     def __init__(self):
         super().__init__(SCREENWIDTH, SCREENHEIGHT, "Campus Mania")
         self.startGame()
-        self.devisible = True
+        self.devisible = False
         # self.clock = arcade.time.Clock()
 
     def setBackground(self):
@@ -45,6 +45,8 @@ class GameController(arcade.Window):
         # arcade.finish_render()
 
     def on_key_press(self, symbol: int, modifiers: int):
+        if symbol == arcade.key.V:
+            self.devisible = not self.devisible
         self.player.on_key_press(symbol, modifiers)
 
 
