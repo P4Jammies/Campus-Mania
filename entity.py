@@ -123,3 +123,6 @@ class Entity(arcade.Sprite):
     def random_direction(self, directions):
         # random by default
         return directions[randint(0, len(directions)-1)]
+
+    def draw_thoughts(self):
+        arcade.draw_line(self.center_x, self.center_y, self.goal.x, self.goal.y, self.color, 4)

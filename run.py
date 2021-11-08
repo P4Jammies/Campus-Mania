@@ -8,6 +8,7 @@ class GameController(arcade.Window):
     def __init__(self):
         super().__init__(SCREENWIDTH, SCREENHEIGHT, "Campus Mania")
         self.startGame()
+        self.devisible = True
         # self.clock = arcade.time.Clock()
 
     def setBackground(self):
@@ -36,6 +37,9 @@ class GameController(arcade.Window):
 
     def on_draw(self):
         arcade.start_render()
+        if self.devisible:
+            for entity in self.sprites:
+                entity.draw_thoughts()
         #self.nodes.render()
         self.sprites.draw()
         # arcade.finish_render()

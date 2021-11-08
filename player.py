@@ -10,6 +10,7 @@ class Player(Entity):
         self.color = WHITE
         self.velocity = (0, 0)
         self.key = STOP
+        self.aim = Vector2()
 
     def set_velocity(self, dt):
         super().set_velocity(dt)
@@ -43,9 +44,17 @@ class Player(Entity):
     def on_key_press(self, symbol, modifiers):
         if symbol == arcade.key.UP or symbol == arcade.key.W:
             self.key = UP
+            self.aim = Vector2(0, SCALEHEIGHT)
         if symbol == arcade.key.DOWN or symbol == arcade.key.S:
             self.key = DOWN
+            self.aim = Vector2(0, -SCALEHEIGHT)
         if symbol == arcade.key.LEFT or symbol == arcade.key.A:
             self.key = LEFT
+            self.aim = Vector2(-SCALEWIDTH, 0)
         if symbol == arcade.key.RIGHT or symbol == arcade.key.D:
             self.key = RIGHT
+            self.aim = Vector2(SCALEWIDTH, 0)
+
+    def draw_thoughts(self):
+        point = self.position + self.aim
+        arcade.draw_line(self.center_x, self.center_y, point.x, point.y, self.color, 4)
