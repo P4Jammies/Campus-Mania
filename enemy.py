@@ -74,7 +74,7 @@ class Clyde(Enemy):
         if (self.player.position-self.position).magnitude2() <= (TILEWIDTH*8)**2:
             self.scatter()
         else:
-            super().scatter()
+            super().chase()
 
 class EnemyGroup(arcade.Window):
     def __init__(self, node, player):
