@@ -5,7 +5,7 @@ from entity import Entity
 from modes import ModeController as Mode
 
 class Enemy(Entity):
-    def __init__(self, node, fname: str="sprites\\null.png", player=None, leader=None, scale: float=1):
+    def __init__(self, node, fname: str="sprites\\null.png", player=None, leader=None, scale: float=SCALE/2):
         super().__init__(node, fname, scale)
         self.name = ENEMY
         self.points = POINTS
@@ -46,7 +46,7 @@ class Pinky(Enemy):
         self.goal = Vector2(0, SCREENHEIGHT)
 
     def chase(self):
-        self.goal = self.player.position + self.player.directions[self.player.direction]*TILEWIDTH*4
+        self.goal = self.player.position + self.player.directions[self.player.direction]*SCALEWIDTH*2
 
 class Inky(Enemy):
     def __init__(self, node, player=None, leader=None):
@@ -58,7 +58,7 @@ class Inky(Enemy):
         self.goal = Vector2(SCREENWIDTH, 0)
 
     def chase(self):
-        player = self.player.position + self.player.directions[self.player.direction]*TILEWIDTH*2
+        player = self.player.position + self.player.directions[self.player.direction]*SCALEWIDTH
         self.goal = self.leader.position + (player-self.leader.position)*2
 
 class Clyde(Enemy):
@@ -71,7 +71,7 @@ class Clyde(Enemy):
         self.goal = Vector2()
 
     def chase(self):
-        if (self.player.position-self.position).magnitude2() <= (TILEWIDTH*8)**2:
+        if (self.player.position-self.position).magnitude2() <= (SCALEWIDTH*4)**2:
             self.scatter()
         else:
             super().chase()

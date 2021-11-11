@@ -4,7 +4,7 @@ from constants import *
 from entity import Entity
 
 class Player(Entity):
-    def __init__(self, node, fname: str="sprites\eyer.png", scale: float=1):
+    def __init__(self, node, fname: str="sprites\eyer.png", scale: float=SCALE/2):
         super().__init__(node, fname, scale)
         self.name = PLAYER
         self.color = WHITE
@@ -57,4 +57,4 @@ class Player(Entity):
 
     def draw_thoughts(self):
         point = self.position + self.aim
-        arcade.draw_line(self.center_x, self.center_y, point.x, point.y, self.color, 4)
+        arcade.draw_line(self.center_x, self.center_y, point.x, point.y, self.color, 2*SCALE)

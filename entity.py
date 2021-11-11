@@ -4,7 +4,7 @@ from constants import *
 from random import randint
 
 class Entity(arcade.Sprite):
-    def __init__(self, node, fname: str, scale: float=1):
+    def __init__(self, node, fname: str, scale: float=SCALE/2):
         super().__init__(fname, scale)
         self.name = None
         self.directions = {UP:Vector2(0, 1), RIGHT:Vector2(1, 0),
@@ -12,7 +12,7 @@ class Entity(arcade.Sprite):
                           STOP:Vector2()}
         self.direction = STOP
         self.dt = 1/30
-        self.set_speed(100)
+        self.set_speed(50)
         self.radius = 10
         self.hitbox = 5
         self.color = RED
@@ -38,7 +38,7 @@ class Entity(arcade.Sprite):
         self.position = self.node.position
 
     def set_speed(self, speed):
-        self.speed = speed * TILEWIDTH / 16
+        self.speed = speed * SCALEWIDTH / 16
     
     def set_velocity(self, dt):
         dt = self.dt
@@ -125,4 +125,4 @@ class Entity(arcade.Sprite):
         return directions[randint(0, len(directions)-1)]
 
     def draw_thoughts(self):
-        arcade.draw_line(self.center_x, self.center_y, self.goal.x, self.goal.y, self.color, 4)
+        arcade.draw_line(self.center_x, self.center_y, self.goal.x, self.goal.y, self.color, 2*SCALE)

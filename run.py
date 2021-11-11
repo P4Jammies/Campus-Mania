@@ -25,15 +25,6 @@ class GameController(arcade.Window):
 
     def on_update(self, dt):
         self.sprites.on_update(dt)
-        #self.checkEvents()
-        #self.render()
-
-    """
-    def checkEvents(self):
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                exit()
-    """
 
     def on_draw(self):
         arcade.start_render()
