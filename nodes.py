@@ -36,8 +36,12 @@ class NodeGroup(object):
         for node in self.nodeList:
             node.render()
         
-    def get_start_node(self):
-        return self.nodeList[0]
+    def get_player_start(self):
+        return self.nodeList[25]
+
+    def get_enemy_start(self):
+        return [self.nodeList[0], self.nodeList[5],
+                self.nodeList[38], self.nodeList[43]]
 
     def init_nodes(self):
         self.level1()

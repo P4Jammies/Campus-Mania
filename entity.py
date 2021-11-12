@@ -12,7 +12,7 @@ class Entity(arcade.Sprite):
                           STOP:Vector2()}
         self.direction = STOP
         self.dt = 1/30
-        self.set_speed(50)
+        self.set_speed(SPEED)
         self.radius = 10
         self.hitbox = 5
         self.color = RED
@@ -39,6 +39,7 @@ class Entity(arcade.Sprite):
 
     def set_speed(self, speed):
         self.speed = speed * SCALEWIDTH / 16
+        self.set_velocity(self.dt)
     
     def set_velocity(self, dt):
         dt = self.dt

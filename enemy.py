@@ -32,13 +32,13 @@ class Enemy(Entity):
 
 class Blinky(Enemy):
     def __init__(self, node, player=None, leader=None):
-        super().__init__(node, "sprites\\eyel.png", player, leader)
+        super().__init__(node, "sprites\\friend.png", player, leader)
         self.name = BLINKY
         self.color = RED
 
 class Pinky(Enemy):
     def __init__(self, node, player=None, leader=None):
-        super().__init__(node, "sprites\\eyed.png", player, leader)
+        super().__init__(node, "sprites\\phone.png", player, leader)
         self.name = PINKY
         self.color = PINK
 
@@ -50,7 +50,7 @@ class Pinky(Enemy):
 
 class Inky(Enemy):
     def __init__(self, node, player=None, leader=None):
-        super().__init__(node, "sprites\\eyer.png", player, leader)
+        super().__init__(node, "sprites\\sleep.png", player, leader)
         self.name = INKY
         self.color = TEAL
 
@@ -63,7 +63,7 @@ class Inky(Enemy):
 
 class Clyde(Enemy):
     def __init__(self, node, player=None, leader=None):
-        super().__init__(node, "sprites\\eyeu.png", player, leader)
+        super().__init__(node, "sprites\\food.png", player, leader)
         self.name = CLYDE
         self.color = ORANGE
 
@@ -77,11 +77,11 @@ class Clyde(Enemy):
             super().chase()
 
 class EnemyGroup(arcade.Window):
-    def __init__(self, node, player):
-        self.blinky = Blinky(node, player)
-        self.pinky = Pinky(node, player)
-        self.inky = Inky(node, player, self.blinky)
-        self.clyde = Clyde(node, player)
+    def __init__(self, nodes, player):
+        self.blinky = Blinky(nodes[1], player)
+        self.pinky = Pinky(nodes[0], player)
+        self.inky = Inky(nodes[3], player, self.blinky)
+        self.clyde = Clyde(nodes[2], player)
         self.enemies = [self.blinky, self.pinky, self.inky, self.clyde]
         
     def __iter__(self):
